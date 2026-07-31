@@ -234,17 +234,17 @@ def analyze_image(media_id: int, clear_model_failures: bool = False):
 
         db.commit()
         invalidate_query_cache()
-        record_activity(
-            db,
-            "upload",
-            "completed",
-            user_id=media.uploader_user_id,
-            media_id=media.id,
-            payload={"filename": media.filename},
-        )
 
         if runtime.applied_mode == "disabled":
             logger.info("Metadata-only processing complete for media %s", media_id)
+            record_activity(
+                db,
+                "upload",
+                "completed",
+                user_id=media.uploader_user_id,
+                media_id=media.id,
+                payload={"filename": media.filename},
+            )
             return {
                 "media_id": media_id,
                 "status": "success",
@@ -303,6 +303,14 @@ def analyze_image(media_id: int, clear_model_failures: bool = False):
         except Exception as e:
             logger.warning(f"Cleanup failed after processing media {media_id}: {e}")
 
+        record_activity(
+            db,
+            "upload",
+            "completed",
+            user_id=media.uploader_user_id,
+            media_id=media.id,
+            payload={"filename": media.filename},
+        )
         return {"media_id": media_id, "status": "success", "metadata": metadata}
 
     except Exception as e:

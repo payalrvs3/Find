@@ -142,6 +142,14 @@ class Settings(BaseSettings):
             )
         return value
 
+    @field_validator("ACTIVITY_RETENTION_DAYS")
+    @classmethod
+    def validate_activity_retention_days(cls, value: int, info):
+        """0 disables auto-purge; negative values are a config error, not 'disabled'."""
+        if value < 0:
+            raise ValueError(f"{info.field_name} must be 0 or greater")
+        return value
+
     @model_validator(mode="after")
     def validate_remote_ml_config(self):
         """Require explicit self-hosted endpoint credentials for remote mode."""
