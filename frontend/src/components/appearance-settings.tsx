@@ -39,7 +39,7 @@ export function AppearanceSettings() {
         {OPTIONS.map(({ value: option, label, icon: Icon }) => (
           <label
             key={option}
-            className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition ${value === option ? "bg-[color:var(--near-white)] text-[color:var(--void)] shadow-sm" : "text-[color:var(--silver)] hover:bg-[color:var(--surface-hover)]"}`}
+            className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition ${value === option ? "bg-[color:var(--near-white)] text-[color:var(--void)] shadow-xs" : "text-[color:var(--silver)] hover:bg-[color:var(--surface-hover)]"}`}
           >
             <input
               className="sr-only"
